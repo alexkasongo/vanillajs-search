@@ -10,11 +10,8 @@ const createCard = ({ title, href, img }) => `
     </div>
 `;
 
-const columns = (cards) => `
-<div class="row">
-    ${cards.map((card) => `<div class="col-6 col-lg-3 mt-3">${card}</div>`).join('')}
-</div>
-`;
+const columns = (cards) => cards.map((card) => `<div class="col-6 col-lg-3 mt-3">${card}</div>`).join('');
+
 
 fetch('movies.json')
     // convert to json  
@@ -23,14 +20,23 @@ fetch('movies.json')
         // sort movies
         movies.sort((a, b) => a.title.localeCompare(b.title));
 
-        // gives us back cards html element
         const cards = document.getElementById('cards')
-        cards.innerHTML = columns(movies.map((movie) => createCard(movie)));
+        const elRow = document.createElement('div');
+        elRow.className = 'row';
+        // add a child element to another element, in this case append the row to the card element
+        cards.appendChild(elRow);
+
+        const updateMovies = (movies) => {
+            elRow.innerHTML = columns(movies);
+        };
+
+        // gives us back cards html element
+        updateMovies(movies.map((movie) => createCard(movie)));
 
         const search = document.querySelector('.search');
         search.addEventListener('keyup', (evt) => {
             const text = evt.target.value.toLowerCase();
-            cards.innerHTML = columns(movies
+            updateMovies(movies
                 .filter(({ title }) => title.toLowerCase().includes(text))
                 .map(movie => createCard(movie))
             );
