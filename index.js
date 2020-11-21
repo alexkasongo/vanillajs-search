@@ -10,9 +10,6 @@ const createCard = ({ title, href, img }) => `
     </div>
 `;
 
-const columns = (cards) => cards.map((card) => `<div class="col-6 col-lg-3 mt-3">${card}</div>`).join('');
-
-
 fetch('movies.json')
     // convert to json  
     .then(res => res.json())
@@ -27,7 +24,7 @@ fetch('movies.json')
         cards.appendChild(elRow);
 
         const updateMovies = (movies) => {
-            elRow.innerHTML = columns(movies);
+            elRow.innerHTML = movies.map((card) => `<div class="col-6 col-lg-3 mt-3">${card}</div>`).join('');
         };
 
         // gives us back cards html element
