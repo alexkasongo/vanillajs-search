@@ -2,7 +2,7 @@
   "scripts": {
     "deploy": "npm run build && gh-pages -d dist",
     "dev": "webpack --watch --mode=development",
-    "prod": "webpack --mode=production"
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
